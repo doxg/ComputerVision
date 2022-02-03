@@ -1,6 +1,7 @@
 <img align="left" src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" height = "150"> 
 <img align="right" src = "https://albumentations.ai/assets/img/custom/albumentations_card.png"  height = "150">
 
+<h1 align="center"> UNET for semantic segmentation </>
 # UNET for semantic segmentation
 ## Introduction
 Segmentation is one of basic tasks in computer vision. In segmetation, every single pixel of image is represented as certain class, while the whole image is labeled in standard 
