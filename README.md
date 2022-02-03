@@ -1,15 +1,16 @@
-logo https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg
+logo (https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg)
 
-#UNET for semantic segmentation
+# UNET for semantic segmentation
 ## Introduction
 Segmentation is one of basic tasks in computer vision. In segmetation, every single pixel of image is represented as certain class, while the whole image is labeled in standard 
 classsification task. The output of model is high resolution image(usually the same size as input) in which each pixel is labeled. 
 
 **Semantic segmentation vs Instance segmentation: **
+
 Semantic segmenation doesn't distinguish unique objects within a single category and all of them are treated as one entity.
 Instance segmenation identified individual objects related to one category.
 
-##UNET
+## UNET
 If we take a close look at architecture of the network, it resembles character "U". The main idea of network is to make a symmetrical shape by successive layers, where there is an
 upsampling operator for each pooling operator. Upsampling is done on output of contracting layers, which contains most of extracted context information. However, there might be
 some local details lost during pooling. So, shortcut pathes between corresponding contracting and expansive layer are added in order to make upsampling more accurate. The output of 
