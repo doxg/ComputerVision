@@ -1,6 +1,6 @@
 <p float="left">
-  <img align:"left" src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" width="50%" height = "150"> 
-  <img align: "right" src = "https://albumentations.ai/assets/img/custom/albumentations_card.png" width="50%" height = "150">
+  <img src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" height = "150"> 
+  <img src = "https://albumentations.ai/assets/img/custom/albumentations_card.png" height = "150">
 </p>
 --------------------------------------------------------------------------------
 
