@@ -1,4 +1,4 @@
-![](https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg | height = 200)
+<img src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" width = "500" height = "200">
 
 # UNET for semantic segmentation
 ## Introduction
