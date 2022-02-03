@@ -3,7 +3,10 @@
   <img align="right" src = "https://albumentations.ai/assets/img/custom/albumentations_card.png"  height = "150">
 </p>
 
-<p>&nbsp;</p>
+<p>&nbsp;
+  &nbsp;
+  &nbsp;
+</p>
 
 # UNET for semantic segmentation
 ## Introduction
