@@ -1,7 +1,7 @@
-
-<img style="float: left;" src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" height = "150"> 
-<img style="float: right;" src = "https://albumentations.ai/assets/img/custom/albumentations_card.png"  height = "150">
-
+<p float="left">
+  <img style="float: left;" src = "https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg" height = "150"> 
+  <img style="float: right;" src = "https://albumentations.ai/assets/img/custom/albumentations_card.png"  height = "150">
+</p>
 --------------------------------------------------------------------------------
 
 
