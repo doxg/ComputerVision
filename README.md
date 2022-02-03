@@ -1,4 +1,4 @@
-logo (https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg)
+!(https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg)
 
 # UNET for semantic segmentation
 ## Introduction
