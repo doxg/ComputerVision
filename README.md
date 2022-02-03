@@ -1,4 +1,4 @@
-![](https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg=250x250)
+![](https://miro.medium.com/max/1200/1*bBS_lYMoWhiyJf733Bghwg.jpeg =250x250)
 
 # UNET for semantic segmentation
 ## Introduction
