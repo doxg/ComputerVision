@@ -16,6 +16,8 @@ upsampling operator for each pooling operator. Upsampling is done on output of c
 some local details lost during pooling. So, shortcut pathes between corresponding contracting and expansive layer are added in order to make upsampling more accurate. The output of 
 each contracting layer before being pooled are sent to corresponding expansive layer. In such a creative way, the potentially lost data can be compensated.
 
+<img src ="https://github.com/doxg/ComputerVision/blob/master/Architechture.png">
+
 The contracting path follows the typical architecture of a convolutional network. It consists of the repeated application of two 3x3 convolutions (unpadded convolutions),
 each followed by a rectified linear unit (ReLU) and a 2x2 max pooling operation with stride 2 for downsampling. At each downsampling step the number of features channels is doubled.
 Every step in the expansive path consists of an upsampling of the feature map followed by a 2x2 convolution (“up-convolution”, "transpose conv") that halves the
