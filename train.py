@@ -5,15 +5,18 @@ from albumentations.pytorch import ToTensorV2
 from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
-from Model import Unet
-from utils import read_args, get_loaders, check_accuracy, save_predictions_as_imgs, save_checkpoint
+from main import Unet
+from utils import read_args, get_loaders, evaluate_biseg, save_predictions_as_imgs, save_checkpoint, load_model
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-args = read_args("config/configs.yaml")
+args = read_args("config/hyper_params.yaml")
 
 
-def train_fn(loader, model, optimizer, loss_fn, scaler):
+def train_fn(loader, model, optimizer, loss_fn, scaler, load=False):
+    if load:
+        load_model(model,optimizer, "weights/binarysegmentation.pth.tar")
+
     loop = tqdm(loader)
 
     for batch_idx, (data, targets) in enumerate(loop):
@@ -56,28 +59,27 @@ def main():
 
     train_loader, eval_loader = get_loaders(args, train_transforms, eval_transforms)
 
-    if args.LOAD_MODEL:
-        print("Loading Checkpoint")
-        checkpoint = torch.load("my_checkpoint.pth.tar")
-        model.load_state_dict(checkpoint["state_dict"])
 
-    check_accuracy(eval_loader, model, DEVICE)
+    dice_score = evaluate_biseg(eval_loader, model, DEVICE)
     scaler = torch.cuda.amp.GradScaler()
 
     for epoch in range(args.NUM_EPOCHS):
-        train_fn(train_loader, model, optimizer, loss_fn, scaler)
+        train_fn(train_loader, model, optimizer, loss_fn, scaler, args.LOAD_MODEL)
 
-        checkpoint = {
-            "state_dict": model.state_dict(),
-            "optimizer": optimizer.state_dict(),
-        }
+        if dice_score < evaluate_biseg(eval_loader, model, DEVICE):
 
-        save_checkpoint(checkpoint)
+            checkpoint = {
+                "state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+            }
 
-        check_accuracy(eval_loader, model, DEVICE)
+            save_checkpoint(checkpoint, filename="weights/binarysegmentation.pth.tar")
+            args.LOAD_MODEL = True
+        else:
+            args.LOAD_MODEL = False
 
         save_predictions_as_imgs(
-            eval_loader, model, folder="saved_images/", device=DEVICE
+            eval_loader, model, folder="results/binary_segmentation", device=DEVICE
         )
 
 

@@ -5,20 +5,22 @@ from albumentations.pytorch import ToTensorV2
 from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
-from Model import Unet
-from utils import read_args, get_loaders1, check_accuracy, save_predictions_as_imgs, save_checkpoint
+from main import Unet
+from utils import read_args, get_sandstone_loaders, evaluate_multiseg, save_predictions_as_imgs, save_checkpoint, load_model
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-args = read_args("config/configs.yaml")
+args = read_args("config/hyper_params.yaml")
 
 
-def train_fn(loader, model, optimizer, loss_fn, scaler):
+def train_fn(loader, model, optimizer, loss_fn, scaler, load=False):
+    if load:
+        load_model(model,optimizer, "weights/multi_segmentation.pth.tar")
+
     loop = tqdm(loader)
 
     for batch_idx, (data, targets) in enumerate(loop):
         data = data.to(DEVICE)
-        # targets = targets.float().unsqueeze(1).to(DEVICE)
         targets = targets.float().to(DEVICE)
 
         with torch.cuda.amp.autocast():  ### Tensors may be any type, improve performance while maintaining accuracy
@@ -52,30 +54,28 @@ def main():
     loss_fn = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=args.LEARNING_RATE)
 
-    train_loader, eval_loader = get_loaders1(args, train_transforms, eval_transforms)
+    train_loader, eval_loader = get_sandstone_loaders(args, train_transforms, eval_transforms)
 
-    if args.LOAD_MODEL:
-        print("Loading Checkpoint")
-        checkpoint = torch.load("sandstone_checkpoint.pth.tar")
-        model.load_state_dict(checkpoint["state_dict"])
 
-    check_accuracy(eval_loader, model, DEVICE)
+    dice_score = evaluate_multiseg(eval_loader, model, DEVICE)
+    load_model = False
     scaler = torch.cuda.amp.GradScaler()
 
     for epoch in range(args.NUM_EPOCHS):
-        train_fn(train_loader, model, optimizer, loss_fn, scaler)
+        train_fn(train_loader, model, optimizer, loss_fn, scaler, load_model)
 
-        checkpoint = {
-            "state_dict": model.state_dict(),
-            "optimizer": optimizer.state_dict(),
-        }
-
-        save_checkpoint(checkpoint)
-
-        check_accuracy(eval_loader, model, DEVICE)
+        if dice_score < evaluate_multiseg(eval_loader, model, DEVICE):
+            checkpoint = {
+                "state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+            }
+            save_checkpoint(checkpoint, filename="weights/multi_segmentation.pth.tar")
+            load_model = True
+        else:
+            load_model = False
 
         save_predictions_as_imgs(
-            eval_loader, model, folder="multisegmentation_results/", device=DEVICE
+            eval_loader, model, folder="results/multi_segmentation", device=DEVICE
         )
 
 

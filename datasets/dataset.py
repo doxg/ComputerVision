@@ -41,4 +41,3 @@ if __name__ == "__main__":
                                              max_pixel_value=255.0),
                                   ToTensorV2()])
     test_dataset = MyDataset(image_dir="data/train_images/", mask_dir="data/train_masks/", transform=None)
-    pdb.set_trace()

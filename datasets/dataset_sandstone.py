@@ -47,6 +47,7 @@ class SandStoneDataset(Dataset):
 
 if __name__ == "__main__":
     train_path = "../sandstone_data/decomposed/"
+
     # Already decomposed
     # decompose_tif_images("../sandstone_data/train_images.tif", "train")
     # decompose_tif_images("../sandstone_data/mask_images.tif", "validation")
