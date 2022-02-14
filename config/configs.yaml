@@ -1,0 +1,14 @@
+!!python/object:config.config.Arguments
+
+LEARNING_RATE: 0.0001
+BATCH_SIZE: 32
+NUM_EPOCHS: 3
+NUM_WORKERS: 2
+IMAGE_HEIGHT: 320  # 1280 originally
+IMAGE_WIDTH: 480  # 1918 originally
+PIN_MEMORY: True
+LOAD_MODEL: False
+TRAIN_IMG_DIR: "data/train_images/"
+TRAIN_MASK_DIR: "data/train_masks/"
+VAL_IMG_DIR: "data/val_images/"
+VAL_MASK_DIR: "data/val_masks/"
