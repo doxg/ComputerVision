@@ -31,8 +31,9 @@ number of feature channels, a concatenation with the correspondingly cropped fea
 a ReLU. The cropping is necessary due to the loss of border pixels in every convolution. At the final layer a 1x1 convolution is used to map each 64-component feature vector to
 the desired number of classes. In total the network has 23 convolutional layers.
 
-### Dataset
+### Datasets
 Carvana Image Masking Challenge: https://www.kaggle.com/c/carvana-image-masking-challenge
+
 Sandstone Dataset: https://drive.google.com/file/d/1HWtBaSa-LTyAMgf2uaz1T9o1sTWDBajU/view
 
 ### References:
